@@ -51,3 +51,22 @@
             </div>
         }
     </div>
+    @*@section scripts{
+        <script>
+            $(document).ready(function () {
+                $(".js-toggle-follow").click(function (e) {
+                    var button = $(e.target);
+                    $.post("/api/follows", { IdBook: button.attr("data-comic-id") })
+                        .done(function () {
+                            button.addClass("btn-success")
+                            button.text("UnFollow")
+                            location.reload();
+                        })
+                        .fail(function () {
+                            alert("Something failed");
+                        });
+                });
+            });
+
+        </script>
+    }*@
