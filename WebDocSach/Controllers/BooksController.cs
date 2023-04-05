@@ -19,12 +19,18 @@ namespace WebDocSach.Controllers
         }
         // GET: Books
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var books = _dbContext.Books
                 .Include("TheLoai");
-
-            return View(books);
+            var book = from l in _dbContext.Books
+                         select l;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                book = book.Where(c => c.TenSach.ToLower().Contains(searchString));
+            }
+            return View(book);
         }
         public ActionResult Create()
         {
